@@ -15,17 +15,20 @@ app.get('/check', async (req, res) => {
   try {
     const { data } = await axios.get("https://api.honeypot.is/v2/IsHoneypot", {
       headers: {
-        // Uncomment below and add your API key if required in the future
-        // "X-API-KEY": "YOUR_API_KEY"
+        "X-API-KEY": "demo" // dummy header to avoid 404
       },
       params: {
-        address: token
+        address: token,
+        chain: "bsc"
       }
     });
 
     res.json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Honeypot API request failed', details: err.message });
+    res.status(500).json({
+      error: 'Honeypot API request failed',
+      details: err.response?.data || err.message
+    });
   }
 });
 
