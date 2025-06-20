@@ -1,3 +1,4 @@
+// backend/server.js
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -12,9 +13,16 @@ app.get('/check', async (req, res) => {
   if (!token) return res.status(400).json({ error: 'Missing token address' });
 
   try {
-    const { data } = await axios.get(
-      `https://api.honeypot.is/v2/IsHoneypot?address=${token}&network=bsc`
-    );
+    const { data } = await axios.get("https://api.honeypot.is/v2/IsHoneypot", {
+      headers: {
+        // Uncomment below and add your API key if required in the future
+        // "X-API-KEY": "YOUR_API_KEY"
+      },
+      params: {
+        address: token
+      }
+    });
+
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: 'Honeypot API request failed', details: err.message });
