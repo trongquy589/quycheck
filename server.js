@@ -14,12 +14,9 @@ app.get('/check', async (req, res) => {
 
   try {
     const { data } = await axios.get("https://api.honeypot.is/v2/IsHoneypot", {
-      headers: {
-        "X-API-KEY": "demo" // dummy header to avoid 404
-      },
       params: {
         address: token,
-        chain: "bsc"
+        chainID: 56 // BSC chain ID
       }
     });
 
